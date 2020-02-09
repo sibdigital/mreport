@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/MainMakPSB">
+  <ResourceLink global="jdbc/MPCore" name="jdbc/MPCore" type="javax.sql.DataSource"/>
+  <ResourceLink global="jdbc/ksprocesses" name="jdbc/ksprocesses" type="javax.sql.DataSource"/>
+  <ResourceLink global="jdbc/ksregisters" name="jdbc/ksregisters" type="javax.sql.DataSource"/>
+  <ResourceLink global="jdbc/nvp" name="jdbc/nvp" type="javax.sql.DataSource"/>
+  <ResourceLink global="jdbc/upd" name="jdbc/upd" type="javax.sql.DataSource"/>
+  <ResourceLink global="jdbc/biud" name="jdbc/biud" type="javax.sql.DataSource"/>
+  <ResourceLink global="jdbc/pku" name="jdbc/pku" type="javax.sql.DataSource"/>
+  <ResourceLink global="jdbc/mais" name="jdbc/mais" type="javax.sql.DataSource"/>
+  <ResourceLink global="mpcore/authurl" name="mpcore/authurl" type="java.lang.String"/>
+  <ResourceLink global="mpcore/jobReportDirectory" name="mpcore/jobReportDirectory" type="java.lang.String"/>
+  <ResourceLink global="mpcore/jobReportURL" name="mpcore/jobReportURL" type="java.lang.String"/>
+  <ResourceLink global="mpcore/infstatURL" name="mpcore/infstatURL" type="java.lang.String"/>
+  <ResourceLink global="mpcore/infomatSpravURL" name="mpcore/infomatSpravURL" type="java.lang.String"/>
+  <ResourceLink global="mpcore/commonauthurl" name="mpcore/commonauthurl" type="java.lang.String"/>
+  <!--<Environment name="jobReportDirectory" value="C:\\makpsb_report"
+         type="java.lang.String" override="false"/> -->
+  <Environment name="jobReportDirectory_nazn" override="false" type="java.lang.String" value="C:\\makpsb_report\\spec"/>
+  <Environment name="jobReportDirectory_naznPilot" override="false" type="java.lang.String" value="C:\\makpsb_report\\spec_pilot"/>
+  <Environment name="jobReportDirectory_edv" override="false" type="java.lang.String" value="C:\\makpsb_report\\edv"/>
+</Context>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="CoreMakPSBPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <non-jta-data-source>java:comp/env/jdbc/MPCore</non-jta-data-source>
+    <class>ru.p03.makpsb.core.entity.dict.Raion</class>
+    <class>ru.p03.makpsb.core.entity.dict.JobCalendar</class>
+    <class>ru.p03.makpsb.core.entity.dict.DepartAdress</class>
+    <class>ru.p03.makpsb.core.entity.dict.LeaderInfo</class>
+    <class>ru.p03.makpsb.core.entity.service.UserInfo</class>
+    <class>ru.p03.makpsb.core.entity.service.Stat</class>
+    <class>ru.p03.makpsb.core.entity.service.StatAvg</class>
+    <class>ru.p03.makpsb.core.entity.dict.AvailablePeriod</class>
+    <class>ru.p03.makpsb.dynreport.ActualDynReport</class>
+    <class>ru.p03.makpsb.core.entity.service.Cvitantion</class>
+    <class>ru.p03.makpsb.core.entity.service.Resource</class>
+    <class>ru.p03.makpsb.core.entity.service.Role</class>
+    <class>ru.p03.makpsb.core.entity.service.UseRole</class>
+    <class>ru.p03.makpsb.core.entity.service.ClsDatasource</class>
+    <class>ru.p03.makpsb.core.entity.service.ClsReportDatasource</class>
+    <class>ru.p03.makpsb.core.entity.service.ClsReportPeriod</class>
+    <class>ru.p03.makpsb.core.entity.service.ClsStandartFormingPeriod</class>
+    <class>ru.p03.makpsb.core.entity.service.ReportInfo</class>
+    <!--<properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:db2://10.3.30.230:50000/MP_CORE"/>
+      <property name="javax.persistence.jdbc.user" value="db2admin"/>
+      <property name="javax.persistence.jdbc.driver" value="com.ibm.db2.jcc.DB2Driver"/>
+      <property name="javax.persistence.jdbc.password" value="db2admin"/>
+    </properties> -->
+  </persistence-unit>
+  
+  <persistence-unit name="MPIncrem" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <non-jta-data-source>java:comp/env/jdbc/MPCore</non-jta-data-source>
+    <class>ru.p03.makpsb.increm.model.SignatureTiming</class>
+    <class>ru.p03.makpsb.increm.model.ClsDetectPeriod</class>
+    <class>ru.p03.makpsb.increm.model.ClsPeriodType</class>
+    <class>ru.p03.makpsb.increm.model.ClsSignature</class>
+    <class>ru.p03.makpsb.increm.model.ClsSignatureDepart</class>
+    <class>ru.p03.makpsb.increm.model.ClsSignatureHolder</class>
+    <class>ru.p03.makpsb.increm.model.ClsSignatureType</class>
+    <class>ru.p03.makpsb.increm.model.RegDetectedSignature</class>
+    <class>ru.p03.makpsb.increm.model.RegDetectedSignatureDtlValues</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzTriggersPK</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzTriggers</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzSimpleTriggers</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzSimpleTriggersPK</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzCronTriggers</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzCronTriggersPK</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzSimpropTriggers</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzSimpropTriggersPK</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzJobDetails</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzJobDetailsPK</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzBlobTriggers</class>
+    <class>ru.p03.makpsb.core.entity.quartz.QrtzBlobTriggersPK</class>
+    <properties>
+        <property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
+    </properties>
+  </persistence-unit>
+
+  <persistence-unit name="CoreMakPSBPU_TEST" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>ru.p03.makpsb.core.entity.dict.Raion</class>
+    <class>ru.p03.makpsb.core.entity.dict.JobCalendar</class>
+    <class>ru.p03.makpsb.core.entity.dict.DepartAdress</class>
+    <class>ru.p03.makpsb.core.entity.dict.LeaderInfo</class>
+    <class>ru.p03.makpsb.core.entity.service.UserInfo</class>
+    <class>ru.p03.makpsb.core.entity.service.Stat</class>
+    <class>ru.p03.makpsb.core.entity.service.StatAvg</class>
+    <class>ru.p03.makpsb.core.entity.dict.AvailablePeriod</class>
+    <class>ru.p03.makpsb.dynreport.ActualDynReport</class>
+    <class>ru.p03.makpsb.core.entity.service.Cvitantion</class>
+    <class>ru.p03.makpsb.core.entity.service.Resource</class>
+    <class>ru.p03.makpsb.core.entity.service.Role</class>
+    <class>ru.p03.makpsb.core.entity.service.UseRole</class>
+    <class>ru.p03.makpsb.core.entity.service.ClsDatasource</class>
+    <class>ru.p03.makpsb.core.entity.service.ClsReportDatasource</class>
+    <class>ru.p03.makpsb.core.entity.service.ClsReportPeriod</class>
+    <class>ru.p03.makpsb.core.entity.service.ClsStandartFormingPeriod</class>
+    <class>ru.p03.makpsb.core.entity.service.ReportInfo</class>
+    <properties>
+        <property name="eclipselink.canonicalmodel.subpackage" value="test"/>
+    </properties>
+  </persistence-unit>
+</persistence>

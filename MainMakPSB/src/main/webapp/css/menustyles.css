@@ -1,0 +1,504 @@
+@import url(menugoogle/montserrat.css);
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+#cssmenu ul li a,
+#cssmenu #menu-button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#cssmenu:after,
+#cssmenu > ul:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#cssmenu #menu-button {
+  display: none;
+}
+#cssmenu {
+  font-family: Montserrat, sans-serif;
+  background: #d6d6d6;
+}
+#cssmenu > ul > li {
+  float: left;
+}
+#cssmenu.align-center > ul {
+  font-size: 0;
+  text-align: center;
+}
+#cssmenu.align-center > ul > li {
+  display: inline-block;
+  float: none;
+}
+#cssmenu.align-center ul ul {
+  text-align: left;
+}
+#cssmenu.align-right > ul > li {
+  float: right;
+}
+#cssmenu > ul > li > a {
+  padding: 17px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #000000;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+#cssmenu > ul > li:hover > a {
+  color: #1E90FF
+}
+#cssmenu > ul > li.has-sub > a {
+  padding-right: 30px;
+}
+#cssmenu > ul > li.has-sub > a:after {
+  position: absolute;
+  top: 22px;
+  right: 11px;
+  width: 8px;
+  height: 2px;
+  display: block;
+  background: #dddddd;
+  content: '';
+}
+#cssmenu > ul > li.has-sub > a:before {
+  position: absolute;
+  top: 19px;
+  right: 14px;
+  display: block;
+  width: 2px;
+  height: 8px;
+  background: #d6d6d6;
+  content: '';
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -ms-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+#cssmenu > ul > li.has-sub:hover > a:before {
+  top: 23px;
+  height: 0;
+}
+#cssmenu ul ul {
+  position: absolute;
+  left: -9999px;
+}
+#cssmenu.align-right ul ul {
+  text-align: right;
+}
+#cssmenu ul ul li {
+  height: 0;
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -ms-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+#cssmenu li:hover > ul {
+  left: auto;
+}
+#cssmenu.align-right li:hover > ul {
+  left: auto;
+  right: 0;
+}
+#cssmenu li:hover > ul > li {
+  height: 35px;
+}
+#cssmenu ul ul ul {
+  margin-left: 100%;
+  top: 0;
+}
+#cssmenu.align-right ul ul ul {
+  margin-left: 0;
+  margin-right: 100%;
+}
+#cssmenu ul ul li a {
+  border-bottom: 1px solid rgba(150, 150, 150, 0.15);
+  padding: 11px 15px;
+  width: 210px;
+  font-size: 12px;
+  text-decoration: none;
+  color: #000000;
+  font-weight: 400;
+  background: #d6d6d6;
+}
+#cssmenu ul ul li:last-child > a,
+#cssmenu ul ul li.last-item > a {
+  border-bottom: 0;
+}
+#cssmenu ul ul li:hover > a,
+#cssmenu ul ul li a:hover {
+  color: #1E90FF;
+}
+#cssmenu ul ul li.has-sub > a:after {
+  position: absolute;
+  top: 16px;
+  right: 11px;
+  width: 8px;
+  height: 2px;
+  display: block;
+  background: #dddddd;
+  content: '';
+}
+#cssmenu.align-right ul ul li.has-sub > a:after {
+  right: auto;
+  left: 11px;
+}
+#cssmenu ul ul li.has-sub > a:before {
+  position: absolute;
+  top: 13px;
+  right: 14px;
+  display: block;
+  width: 2px;
+  height: 8px;
+  background: #dddddd;
+  content: '';
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -ms-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+#cssmenu.align-right ul ul li.has-sub > a:before {
+  right: auto;
+  left: 14px;
+}
+#cssmenu ul ul > li.has-sub:hover > a:before {
+  top: 17px;
+  height: 0;
+}
+@media all and (max-width: 768px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1024px), only screen and (min-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (min-resolution: 192dpi) and (max-width: 1024px), only screen and (min-resolution: 2dppx) and (max-width: 1024px) {
+  #cssmenu {
+    width: 100%;
+  }
+  #cssmenu ul {
+    width: 100%;
+    display: none;
+  }
+  #cssmenu.align-center > ul {
+    text-align: left;
+  }
+  #cssmenu ul li {
+    width: 100%;
+    border-top: 1px solid rgba(120, 120, 120, 0.2);
+  }
+  #cssmenu ul ul li,
+  #cssmenu li:hover > ul > li {
+    height: auto;
+  }
+  #cssmenu ul li a,
+  #cssmenu ul ul li a {
+    width: 100%;
+    border-bottom: 0;
+  }
+  #cssmenu > ul > li {
+    float: none;
+  }
+  #cssmenu ul ul li a {
+    padding-left: 25px;
+  }
+  #cssmenu ul ul ul li a {
+    padding-left: 35px;
+  }
+  #cssmenu ul ul li a {
+    color: #dddddd;
+    background: none;
+  }
+  #cssmenu ul ul li:hover > a,
+  #cssmenu ul ul li.active > a {
+    color: #000000;
+  }
+  #cssmenu ul ul,
+  #cssmenu ul ul ul,
+  #cssmenu.align-right ul ul {
+    position: relative;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+  }
+  #cssmenu > ul > li.has-sub > a:after,
+  #cssmenu > ul > li.has-sub > a:before,
+  #cssmenu ul ul > li.has-sub > a:after,
+  #cssmenu ul ul > li.has-sub > a:before {
+    display: none;
+  }
+  #cssmenu #menu-button {
+    display: block;
+    padding: 17px;
+    color: #dddddd;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  #cssmenu #menu-button:after {
+    position: absolute;
+    top: 22px;
+    right: 17px;
+    display: block;
+    height: 4px;
+    width: 20px;
+    border-top: 2px solid #dddddd;
+    border-bottom: 2px solid #dddddd;
+    content: '';
+  }
+  #cssmenu #menu-button:before {
+    position: absolute;
+    top: 16px;
+    right: 17px;
+    display: block;
+    height: 2px;
+    width: 20px;
+    background: #dddddd;
+    content: '';
+  }
+  #cssmenu #menu-button.menu-opened:after {
+    top: 23px;
+    border: 0;
+    height: 2px;
+    width: 15px;
+    background: #000000;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  #cssmenu #menu-button.menu-opened:before {
+    top: 23px;
+    background: #000000;
+    width: 15px;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+  #cssmenu .submenu-button {
+    position: absolute;
+    z-index: 99;
+    right: 0;
+    top: 0;
+    display: block;
+    border-left: 1px solid rgba(120, 120, 120, 0.2);
+    height: 46px;
+    width: 46px;
+    cursor: pointer;
+  }
+  #cssmenu .submenu-button.submenu-opened {
+    background:  #000000;
+  }
+  #cssmenu ul ul .submenu-button {
+    height: 34px;
+    width: 34px;
+  }
+  #cssmenu .submenu-button:after {
+    position: absolute;
+    top: 22px;
+    right: 19px;
+    width: 8px;
+    height: 2px;
+    display: block;
+    background: #dddddd;
+    content: '';
+  }
+  #cssmenu ul ul .submenu-button:after {
+    top: 15px;
+    right: 13px;
+  }
+  #cssmenu .submenu-button.submenu-opened:after {
+    background: #000000;
+  }
+  #cssmenu .submenu-button:before {
+    position: absolute;
+    top: 19px;
+    right: 22px;
+    display: block;
+    width: 2px;
+    height: 8px;
+    background: #dddddd;
+    content: '';
+  }
+  #cssmenu ul ul .submenu-button:before {
+    top: 12px;
+    right: 16px;
+  }
+  #cssmenu .submenu-button.submenu-opened:before {
+    display: none;
+  }
+}
+ 
+#mainmenu{
+    position:relative;
+    background-color: #d6d6d6;
+    height:40px;
+    padding:0;
+    z-index:10 /* для отображения подпунктов поверх остальных блоков */
+}
+#mainmenu ul, /* сбрасываем поля и отступы у списков */
+#mainmenu ul ul {
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+#mainmenu ul {    
+    clear:left;
+    position:relative;
+   /* right:50%;*/
+    height:40px;
+    float:left;
+    text-align:center;
+    font:12px Arial, Helvetica, sans-serif;
+    text-transform:uppercase;    
+}
+#mainmenu ul li {
+    position:relative;
+   /* left:50%;*/
+    float:left;
+    height:40px;
+    padding:0;
+    margin:0
+}
+#mainmenu ul li:last-child {
+    border:none;
+    box-shadow:none
+}    
+#mainmenu ul li a {
+    display:block;
+    color: #111;
+    text-decoration: none;
+    padding:13px 20px
+}
+#mainmenu ul li a:hover {
+    background-color: #0186BA;
+    background-image: -moz-linear-gradient(#04acec,  #0186ba);    
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#04acec), to(#0186ba));
+    background-image: -webkit-linear-gradient(#04acec, #0186ba);
+    background-image: -o-linear-gradient(#04acec, #0186ba);
+    background-image: -ms-linear-gradient(#04acec, #0186ba);
+    background-image: linear-gradient(#04acec, #0186ba);
+    color: #fafafa
+}
+#mainmenu ul li:hover > ul {
+    opacity: 1;
+    visibility: visible;
+    margin: 0;
+}
+ 
+/*************************** Выпадающие подпункты */
+#mainmenu ul li ul {
+    background: #d6d6d6;
+    text-transform:none;
+    opacity: 0;
+    visibility: hidden;
+    position:absolute;
+    left:0;
+    top:40px;
+    font-size:12px;
+    height:auto;
+    width:150px    
+}
+#mainmenu ul li ul li {
+    border:none;
+    position:relative;
+    left:0;
+    float:none;
+    height:auto;
+    margin:0;
+    text-align:left !important;
+}
+#mainmenu ul li ul li:last-child {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+#mainmenu ul li ul li a {
+    padding:10px 8px;
+    border:none
+}
+ 
+/*************************** Выпадающие пункты второго уровня */
+#mainmenu ul li ul li ul {
+    top: 0;
+    left: 150px;
+    margin: 0 0 0 20px;
+    _margin: 0; /*IE6 only*/
+    box-shadow: -1px 0 0 rgba(255,255,255,.3);
+    -moz-box-shadow: -1px 0 0 rgba(255,255,255,.3);
+    -o-box-shadow: -1px 0 0 rgba(255,255,255,.3);
+    -ms-box-shadow: -1px 0 0 rgba(255,255,255,.3);
+    -webkit-box-shadow: -1px 0 0 rgba(255,255,255,.3);    
+}
+ 
+/*********************** Стрелочки на подпунктах */
+#mainmenu ul ul li:first-child > a {
+    border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    -o-border-radius: 3px 3px 0 0;
+    -ms-border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;    
+}
+#mainmenu ul ul li:first-child > a:after {
+    content: '';
+    position: absolute;
+    left: 40px;
+    top: -6px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #444;
+}
+#mainmenu ul ul ul li:first-child a:after {
+    left: -6px;
+    top: 50%;
+    margin-top: -6px;
+    border-left: 0;    
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+    border-right: 6px solid #3b3b3b;
+}
+#mainmenu ul ul li:first-child a:hover:after {border-bottom-color: #04acec}
+ 
+#mainmenu ul ul ul li:first-child a:hover:after {
+    border-right-color: #0299d3; 
+    border-bottom-color: transparent;     
+}
+#mainmenu ul ul li:last-child > a {
+    -moz-border-radius: 0 0 3px 3px;
+    -webkit-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+}	
+/* Переставляем последнее подменю так, что оно находится внутри страницы */
+#mainmenu ul ul.last {
+    left:auto; /* Сбрасываем значение свойства left:0; */
+    right:0; /* Устанавливаем значение для свойства right */
+}
+#mainmenu ul ul.last li {
+    float:bottom;
+    position:relative;
+    right:.8em;
+}
+
+#mainmenu li.hidden {
+  background-color: #eee;  
+  pointer-events: none;
+  user-select: none;
+
+}
+
+#mainmenu li.hidden span{
+  color: #999    
+}

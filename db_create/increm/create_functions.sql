@@ -1,0 +1,260 @@
+/* 
+ * TO CHANGE THIS LICENSE HEADER, CHOOSE LICENSE HEADERS IN PROJECT PROPERTIES.
+ * TO CHANGE THIS TEMPLATE FILE, CHOOSE TOOLS | TEMPLATES
+ * AND OPEN THE TEMPLATE IN THE EDITOR.
+ */
+/**
+ * AUTHOR:  ALTMF
+ * CREATED: 07.04.2017
+ */
+--СРЕЗ ВЫЯВЛЕННЫХ ОШИБОК НА ДАТУ
+CREATE OR REPLACE FUNCTION MP_INCREM.LARGER_DETECTED_SIGNATURE(PTIME_BEGIN TIMESTAMP)
+    RETURNS TABLE (ID              BIGINT,
+                   ID_SIGNATURE    BIGINT,
+                   ID_RAION        BIGINT,
+                   TIME_DETECTED   TIMESTAMP,
+                   TIME_CREATE     TIMESTAMP,
+                   TIME_FIX        TIMESTAMP,
+                   FAM             VARCHAR(255),
+                   IM              VARCHAR(255),
+                   OTC             VARCHAR(255),
+                   SNILS           VARCHAR(14),
+                   DATE_BORN       TIMESTAMP,
+                   ADD_MESSAGE     text
+                  ) as
+    $$
+begin
+    RETURN QUERY
+SELECT
+    ID,
+    ID_SIGNATURE,
+    ID_RAION,
+    TIME_DETECTED,
+    TIME_CREATE,
+    TIME_FIX,
+    FAM,
+    IM,
+    OTC,
+    SNILS,
+    DATE_BORN,
+    ADD_MESSAGE
+FROM  MP_INCREM.REG_DETECTED_SIGNATURE AS RDS
+WHERE RDS.TIME_CREATE >= PTIME_BEGIN AND RDS.IS_DELETED = 0;
+    end $$ LANGUAGE 'plpgsql';
+;
+
+CREATE OR REPLACE FUNCTION MP_INCREM.LARGER_DETECTED_SIGNATURE_ON_TYPE(PTIME_BEGIN TIMESTAMP, PSIGNATURE_TYPE BIGINT)
+    RETURNS TABLE (ID              BIGINT,
+                   ID_SIGNATURE    BIGINT,
+                   ID_RAION        BIGINT,
+                   TIME_DETECTED   TIMESTAMP,
+                   TIME_CREATE     TIMESTAMP,
+                   TIME_FIX        TIMESTAMP,
+                   FAM             VARCHAR(255),
+                   IM              VARCHAR(255),
+                   OTC             VARCHAR(255),
+                   SNILS           VARCHAR(14),
+                   DATE_BORN       TIMESTAMP,
+                   ADD_MESSAGE     text
+                  ) as
+$$
+begin
+    RETURN QUERY
+SELECT
+    ID,
+    ID_SIGNATURE,
+    ID_RAION,
+    TIME_DETECTED,
+    TIME_CREATE,
+    TIME_FIX,
+    FAM,
+    IM,
+    OTC,
+    SNILS,
+    DATE_BORN,
+    ADD_MESSAGE
+FROM  MP_INCREM.REG_DETECTED_SIGNATURE AS RDS
+          INNER JOIN (SELECT
+                          S.ID AS SIGN_ID
+                      FROM MP_INCREM.CLS_SIGNATURE AS S
+                      WHERE S.ID_SIGNATURE_TYPE = PSIGNATURE_TYPE
+) AS TYPED_SIGN
+                     ON RDS.ID_SIGNATURE = TYPED_SIGN.SIGN_ID
+WHERE RDS.TIME_CREATE >= PTIME_BEGIN AND RDS.IS_DELETED = 0
+; end $$ LANGUAGE 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION MP_INCREM.LARGER_DETECTED_SIGNATURE_ON_SIGNATURE(PTIME_BEGIN TIMESTAMP, PSIGNATURE BIGINT)
+    RETURNS TABLE (ID              BIGINT,
+                   ID_SIGNATURE    BIGINT,
+                   ID_RAION        BIGINT,
+                   TIME_DETECTED   TIMESTAMP,
+                   TIME_CREATE     TIMESTAMP,
+                   TIME_FIX        TIMESTAMP,
+                   FAM             VARCHAR(255),
+                   IM              VARCHAR(255),
+                   OTC             VARCHAR(255),
+                   SNILS           VARCHAR(14),
+                   DATE_BORN       TIMESTAMP,
+                   ADD_MESSAGE     text
+                  )as
+$$
+begin
+    RETURN QUERY
+SELECT
+    ID,
+    ID_SIGNATURE,
+    ID_RAION,
+    TIME_DETECTED,
+    TIME_CREATE,
+    TIME_FIX,
+    FAM,
+    IM,
+    OTC,
+    SNILS,
+    DATE_BORN,
+    ADD_MESSAGE
+FROM  MP_INCREM.REG_DETECTED_SIGNATURE AS RDS
+WHERE RDS.TIME_CREATE >= PTIME_BEGIN AND RDS.IS_DELETED = 0 AND RDS.ID_SIGNATURE = PSIGNATURE
+; end $$ LANGUAGE 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION MP_INCREM.SLICE_DETECTED_SIGNATURE_ON_TYPE(PTIME_BEGIN TIMESTAMP, PSIGNATURE_TYPE BIGINT, PONLY_NO_FIXED INT)
+    RETURNS TABLE (ID              BIGINT,
+                   ID_SIGNATURE    BIGINT,
+                   ID_RAION        BIGINT,
+                   TIME_DETECTED   TIMESTAMP,
+                   TIME_CREATE     TIMESTAMP,
+                   TIME_FIX        TIMESTAMP,
+                   FAM             VARCHAR(255),
+                   IM              VARCHAR(255),
+                   OTC             VARCHAR(255),
+                   SNILS           VARCHAR(14),
+                   DATE_BORN       TIMESTAMP,
+                   ADD_MESSAGE     text
+                  )as
+$$
+begin
+    RETURN QUERY
+SELECT
+    RDS.ID,
+    RDS.ID_SIGNATURE,
+    RDS.ID_RAION,
+    RDS.TIME_DETECTED,
+    RDS.TIME_CREATE,
+    RDS.TIME_FIX,
+    RDS.FAM,
+    RDS.IM,
+    RDS.OTC,
+    RDS.SNILS,
+    RDS.DATE_BORN,
+    RDS.ADD_MESSAGE
+FROM  MP_INCREM.REG_DETECTED_SIGNATURE AS RDS
+          INNER JOIN (SELECT
+                          S.ID AS SIGN_ID
+                      FROM MP_INCREM.CLS_SIGNATURE AS S
+                      WHERE S.ID_SIGNATURE_TYPE = PSIGNATURE_TYPE
+) AS TYPED_SIGN
+                     ON RDS.ID_SIGNATURE = TYPED_SIGN.SIGN_ID
+          INNER JOIN(
+    SELECT ID_SIGNATURE, ID_RAION, SNILS, MAX(TIME_CREATE) AS TIME_CREATE
+    FROM  MP_INCREM.REG_DETECTED_SIGNATURE
+    WHERE TIME_CREATE <= PTIME_BEGIN AND IS_DELETED = 0
+      AND (TIME_FIX IS NULL AND PONLY_NO_FIXED = 1 OR PONLY_NO_FIXED = 0)
+    GROUP BY ID_SIGNATURE, ID_RAION, SNILS
+) AS MAX_SLICE
+                    ON RDS.ID_SIGNATURE = MAX_SLICE.ID_SIGNATURE AND RDS.ID_RAION = MAX_SLICE.ID_RAION
+                        AND RDS.SNILS = MAX_SLICE.SNILS AND RDS.TIME_CREATE = MAX_SLICE.TIME_CREATE
+WHERE RDS.IS_DELETED = 0 AND (TIME_FIX IS NULL AND PONLY_NO_FIXED = 1 OR PONLY_NO_FIXED = 0)
+; end $$ LANGUAGE 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION MP_INCREM.SLICE_DETECTED_SIGNATURE_ON_SIGNATURE(PTIME_BEGIN TIMESTAMP, PSIGNATURE BIGINT, PONLY_NO_FIXED INT)
+    RETURNS TABLE (ID              BIGINT,
+                   ID_SIGNATURE    BIGINT,
+                   ID_RAION        BIGINT,
+                   TIME_DETECTED   TIMESTAMP,
+                   TIME_CREATE     TIMESTAMP,
+                   TIME_FIX        TIMESTAMP,
+                   FAM             VARCHAR(255),
+                   IM              VARCHAR(255),
+                   OTC             VARCHAR(255),
+                   SNILS           VARCHAR(14),
+                   DATE_BORN       TIMESTAMP,
+                   ADD_MESSAGE     text
+                  )as
+$$
+begin
+    RETURN QUERY
+SELECT
+    RDS.ID,
+    RDS.ID_SIGNATURE,
+    RDS.ID_RAION,
+    RDS.TIME_DETECTED,
+    RDS.TIME_CREATE,
+    RDS.TIME_FIX,
+    RDS.FAM,
+    RDS.IM,
+    RDS.OTC,
+    RDS.SNILS,
+    RDS.DATE_BORN,
+    RDS.ADD_MESSAGE
+FROM  MP_INCREM.REG_DETECTED_SIGNATURE AS RDS
+          INNER JOIN(
+    SELECT ID_SIGNATURE, ID_RAION, SNILS, MAX(TIME_CREATE) AS TIME_CREATE
+    FROM  MP_INCREM.REG_DETECTED_SIGNATURE
+    WHERE TIME_CREATE <= PTIME_BEGIN AND IS_DELETED = 0
+      AND (TIME_FIX IS NULL AND PONLY_NO_FIXED = 1 OR PONLY_NO_FIXED = 0)
+    GROUP BY ID_SIGNATURE, ID_RAION, SNILS
+) AS MAX_SLICE
+                    ON RDS.ID_SIGNATURE = MAX_SLICE.ID_SIGNATURE AND RDS.ID_RAION = MAX_SLICE.ID_RAION
+                        AND RDS.SNILS = MAX_SLICE.SNILS AND RDS.TIME_CREATE = MAX_SLICE.TIME_CREATE
+WHERE RDS.IS_DELETED = 0 AND  RDS.ID_SIGNATURE = PSIGNATURE
+  AND (TIME_FIX IS NULL AND PONLY_NO_FIXED = 1 OR PONLY_NO_FIXED = 0)
+; end $$ LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE FUNCTION MP_INCREM.SLICE_DETECTED_SIGNATURE_ON_SNILS(PTIME_BEGIN TIMESTAMP, PSNILS VARCHAR(14), PONLY_NO_FIXED INT)
+    RETURNS TABLE (ID              BIGINT,
+                   ID_SIGNATURE    BIGINT,
+                   ID_RAION        BIGINT,
+                   TIME_DETECTED   TIMESTAMP,
+                   TIME_CREATE     TIMESTAMP,
+                   TIME_FIX        TIMESTAMP,
+                   FAM             VARCHAR(255),
+                   IM              VARCHAR(255),
+                   OTC             VARCHAR(255),
+                   SNILS           VARCHAR(14),
+                   DATE_BORN       TIMESTAMP,
+                   ADD_MESSAGE     text
+                  )as
+$$
+begin
+    RETURN QUERY
+SELECT
+    RDS.ID,
+    RDS.ID_SIGNATURE,
+    RDS.ID_RAION,
+    RDS.TIME_DETECTED,
+    RDS.TIME_CREATE,
+    RDS.TIME_FIX,
+    RDS.FAM,
+    RDS.IM,
+    RDS.OTC,
+    RDS.SNILS,
+    RDS.DATE_BORN,
+    RDS.ADD_MESSAGE
+FROM  MP_INCREM.REG_DETECTED_SIGNATURE AS RDS
+          INNER JOIN(
+    SELECT ID_SIGNATURE, ID_RAION, SNILS, MAX(TIME_CREATE) AS TIME_CREATE
+    FROM  MP_INCREM.REG_DETECTED_SIGNATURE
+    WHERE TIME_CREATE <= PTIME_BEGIN AND IS_DELETED = 0
+      AND SNILS = PSNILS
+      AND (TIME_FIX IS NULL AND PONLY_NO_FIXED = 1 OR PONLY_NO_FIXED = 0)
+    GROUP BY ID_SIGNATURE, ID_RAION, SNILS
+) AS MAX_SLICE
+                    ON RDS.ID_SIGNATURE = MAX_SLICE.ID_SIGNATURE AND RDS.ID_RAION = MAX_SLICE.ID_RAION
+                        AND RDS.SNILS = MAX_SLICE.SNILS AND RDS.TIME_CREATE = MAX_SLICE.TIME_CREATE
+WHERE RDS.IS_DELETED = 0
+  AND (TIME_FIX IS NULL AND PONLY_NO_FIXED = 1 OR PONLY_NO_FIXED = 0)
+  AND RDS.SNILS = PSNILS
+; end $$ LANGUAGE 'plpgsql';
