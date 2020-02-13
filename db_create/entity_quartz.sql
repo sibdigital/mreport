@@ -3,19 +3,7 @@
 -- In your Quartz properties file, you'll need to set
 -- org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
 
-drop table if exists qrtz_fired_triggers;
-DROP TABLE  if exists QRTZ_PAUSED_TRIGGER_GRPS;
-DROP TABLE  if exists QRTZ_SCHEDULER_STATE;
-DROP TABLE  if exists QRTZ_LOCKS;
-drop table  if exists qrtz_simple_triggers;
-drop table  if exists qrtz_cron_triggers;
-drop table  if exists qrtz_simprop_triggers;
-DROP TABLE  if exists QRTZ_BLOB_TRIGGERS;
-drop table  if exists qrtz_triggers;
-drop table  if exists qrtz_job_details;
-drop table  if exists qrtz_calendars;
-
-CREATE TABLE qrtz_job_details
+CREATE TABLE makpsb.qrtz_job_details
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     JOB_NAME  VARCHAR(200) NOT NULL,
@@ -30,7 +18,7 @@ CREATE TABLE qrtz_job_details
     PRIMARY KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)
 );
 
-CREATE TABLE qrtz_triggers
+CREATE TABLE makpsb.qrtz_triggers
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -50,10 +38,10 @@ CREATE TABLE qrtz_triggers
     JOB_DATA BYTEA NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)
-        REFERENCES QRTZ_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP)
+        REFERENCES makpsb.QRTZ_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP)
 );
 
-CREATE TABLE qrtz_simple_triggers
+CREATE TABLE makpsb.qrtz_simple_triggers
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -63,10 +51,10 @@ CREATE TABLE qrtz_simple_triggers
     TIMES_TRIGGERED BIGINT NOT NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
-        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+        REFERENCES makpsb.QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE qrtz_cron_triggers
+CREATE TABLE makpsb.qrtz_cron_triggers
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -75,10 +63,10 @@ CREATE TABLE qrtz_cron_triggers
     TIME_ZONE_ID VARCHAR(80),
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
-        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+        REFERENCES makpsb.QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE qrtz_simprop_triggers
+CREATE TABLE makpsb.qrtz_simprop_triggers
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -96,10 +84,10 @@ CREATE TABLE qrtz_simprop_triggers
     BOOL_PROP_2 BOOL NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
-        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+        REFERENCES makpsb.QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE qrtz_blob_triggers
+CREATE TABLE makpsb.qrtz_blob_triggers
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -107,10 +95,10 @@ CREATE TABLE qrtz_blob_triggers
     BLOB_DATA BYTEA NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
-        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+        REFERENCES makpsb.QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE qrtz_calendars
+CREATE TABLE makpsb.qrtz_calendars
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     CALENDAR_NAME  VARCHAR(200) NOT NULL,
@@ -119,14 +107,14 @@ CREATE TABLE qrtz_calendars
 );
 
 
-CREATE TABLE qrtz_paused_trigger_grps
+CREATE TABLE makpsb.qrtz_paused_trigger_grps
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_GROUP  VARCHAR(200) NOT NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE qrtz_fired_triggers
+CREATE TABLE makpsb.qrtz_fired_triggers
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     ENTRY_ID VARCHAR(95) NOT NULL,
@@ -144,7 +132,7 @@ CREATE TABLE qrtz_fired_triggers
     PRIMARY KEY (SCHED_NAME,ENTRY_ID)
 );
 
-CREATE TABLE qrtz_scheduler_state
+CREATE TABLE makpsb.qrtz_scheduler_state
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     INSTANCE_NAME VARCHAR(200) NOT NULL,
@@ -153,35 +141,32 @@ CREATE TABLE qrtz_scheduler_state
     PRIMARY KEY (SCHED_NAME,INSTANCE_NAME)
 );
 
-CREATE TABLE qrtz_locks
+CREATE TABLE makpsb.qrtz_locks
 (
     SCHED_NAME VARCHAR(120) NOT NULL,
     LOCK_NAME  VARCHAR(40) NOT NULL,
     PRIMARY KEY (SCHED_NAME,LOCK_NAME)
 );
 
-create index idx_qrtz_j_req_recovery on qrtz_job_details(SCHED_NAME,REQUESTS_RECOVERY);
-create index idx_qrtz_j_grp on qrtz_job_details(SCHED_NAME,JOB_GROUP);
+create index idx_qrtz_j_req_recovery on makpsb.qrtz_job_details(SCHED_NAME,REQUESTS_RECOVERY);
+create index idx_qrtz_j_grp on makpsb.qrtz_job_details(SCHED_NAME,JOB_GROUP);
 
-create index idx_qrtz_t_j on qrtz_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_qrtz_t_jg on qrtz_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_qrtz_t_c on qrtz_triggers(SCHED_NAME,CALENDAR_NAME);
-create index idx_qrtz_t_g on qrtz_triggers(SCHED_NAME,TRIGGER_GROUP);
-create index idx_qrtz_t_state on qrtz_triggers(SCHED_NAME,TRIGGER_STATE);
-create index idx_qrtz_t_n_state on qrtz_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_qrtz_t_n_g_state on qrtz_triggers(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_qrtz_t_next_fire_time on qrtz_triggers(SCHED_NAME,NEXT_FIRE_TIME);
-create index idx_qrtz_t_nft_st on qrtz_triggers(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
-create index idx_qrtz_t_nft_misfire on qrtz_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
-create index idx_qrtz_t_nft_st_misfire on qrtz_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
-create index idx_qrtz_t_nft_st_misfire_grp on qrtz_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_qrtz_t_j on makpsb.qrtz_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
+create index idx_qrtz_t_jg on makpsb.qrtz_triggers(SCHED_NAME,JOB_GROUP);
+create index idx_qrtz_t_c on makpsb.qrtz_triggers(SCHED_NAME,CALENDAR_NAME);
+create index idx_qrtz_t_g on makpsb.qrtz_triggers(SCHED_NAME,TRIGGER_GROUP);
+create index idx_qrtz_t_state on makpsb.qrtz_triggers(SCHED_NAME,TRIGGER_STATE);
+create index idx_qrtz_t_n_state on makpsb.qrtz_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_qrtz_t_n_g_state on makpsb.qrtz_triggers(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_qrtz_t_next_fire_time on makpsb.qrtz_triggers(SCHED_NAME,NEXT_FIRE_TIME);
+create index idx_qrtz_t_nft_st on makpsb.qrtz_triggers(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
+create index idx_qrtz_t_nft_misfire on makpsb.qrtz_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
+create index idx_qrtz_t_nft_st_misfire on makpsb.qrtz_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
+create index idx_qrtz_t_nft_st_misfire_grp on makpsb.qrtz_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
 
-create index idx_qrtz_ft_trig_inst_name on qrtz_fired_triggers(SCHED_NAME,INSTANCE_NAME);
-create index idx_qrtz_ft_inst_job_req_rcvry on qrtz_fired_triggers(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
-create index idx_qrtz_ft_j_g on qrtz_fired_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_qrtz_ft_jg on qrtz_fired_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_qrtz_ft_t_g on qrtz_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
-create index idx_qrtz_ft_tg on qrtz_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
-
-
-commit;
+create index idx_qrtz_ft_trig_inst_name on makpsb.qrtz_fired_triggers(SCHED_NAME,INSTANCE_NAME);
+create index idx_qrtz_ft_inst_job_req_rcvry on makpsb.qrtz_fired_triggers(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
+create index idx_qrtz_ft_j_g on makpsb.qrtz_fired_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
+create index idx_qrtz_ft_jg on makpsb.qrtz_fired_triggers(SCHED_NAME,JOB_GROUP);
+create index idx_qrtz_ft_t_g on makpsb.qrtz_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
+create index idx_qrtz_ft_tg on makpsb.qrtz_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
